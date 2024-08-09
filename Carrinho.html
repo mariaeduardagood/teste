@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Carrinho de Compras</title>
+    <link rel="stylesheet" href="Carrinho.css">
+</head>
+<body>
+    <a href="site.html" class="back-button">Voltar</a>
+
+    <h1>Seu Carrinho de Compras</h1>
+    <table id="cart">
+        <tr>
+            <th>Produto</th>
+            <th>Preço</th>
+            <th>Quantidade</th>
+            <th>Ação</th>
+        </tr>
+    </table>
+
+    <h2>Forma de Pagamento</h2>
+    <form>
+        <input type="radio" id="credit" name="payment" value="credit">
+        <label for="credit">Cartão de Crédito</label><br>
+        <input type="radio" id="debit" name="payment" value="debit">
+        <label for="debit">Cartão de Débito</label><br>
+        <input type="radio" id="cash" name="payment" value="cash">
+        <label for="cash">Dinheiro</label><br>
+        <input type="radio" id="pix" name="payment" value="pix">
+        <label for="pix">Pix</label>
+    </form>
+
+    <button onclick="confirmPurchase()" class="confirm-button">Confirmar Compra</button>
+    <button onclick="resetCart()" class="reset-button">Resetar Compras</button>
+
+<script>
+    function updateCart() {
+        var cartTable = document.getElementById("cart");
+    
+        while (cartTable.rows.length > 1) {
+            cartTable.deleteRow(1);
+        }
+    
+        var cart = JSON.parse(localStorage.getItem('cart')) || {};
+    
+        for (var item in cart) {
+            var row = cartTable.insertRow(-1);
+            row.insertCell(0).innerHTML = cart[item].name;
+            row.insertCell(1).innerHTML = "R$ " + cart[item].price;
+            row.insertCell(2).innerHTML = cart[item].quantity;
+            var actions = row.insertCell(3);
+            actions.innerHTML = '<button onclick="removeFromCart(\'' + item + '\')">Remover</button>';
+        }
+    }
+    
+    function confirmPurchase() {
+        alert("Compra confirmada!");
+        alert("Retire seu boleto na agencia -------");
+        alert("Obrigado pela Compra!");
+    }
+
+    function resetCart() {
+        localStorage.removeItem('cart');
+        updateCart();
+        alert("Carrinho de compras resetado!");
+    }
+
+    function removeFromCart(id) {
+        var cart = JSON.parse(localStorage.getItem('cart')) || {};
+        var item = cart[id];
+        if (item) {
+            item.quantity--;
+            if (item.quantity <= 0) {
+                delete cart[id];
+            } else {
+                cart[id] = item;
+            }
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCart();
+        } else {
+            alert("Este item não está no seu carrinho.");
+        }
+    }
+
+    window.onload = updateCart;
+</script>
+    
+</body>
+</html>

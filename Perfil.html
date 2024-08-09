@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Perfil do Usuário</title>
+    <link rel="stylesheet" href="Perfil.css">
+
+    <script>
+        function logout() {
+            window.location.href = 'Login.html';
+        }
+        function goBack() {
+            window.location.href = 'site.html';
+        }
+    </script>
+
+    <style>
+        .perfil-container {
+            text-align: center;
+        }
+        img {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+
+    
+</head>
+<body>
+    <div class="perfil-container">
+        <h2>Perfil do Usuário</h2>
+        <img src="FotoPerfil.jpeg" alt="Imagem do Usuário" width="200" height="200">
+        <p><strong>Nome:</strong> Nome do Usuário</p>
+        <p><strong>Email:</strong> email@ex.com</p>
+        <button onclick="logout()">Sair da Conta</button>
+        <button onclick="goBack()">Voltar</button>
+    </div>
+</body>
+</html>
+
